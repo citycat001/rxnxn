@@ -1,7 +1,6 @@
 require 'nn'
 require 'rnn'
 require 'paths'
-require 'cunn'
 local csv2tensor = require 'csv2tensor'
 local dl = require 'dataload'
 
@@ -131,12 +130,6 @@ xplog.trainppl = {}
 xplog.valppl = {}
 xplog.minvalppl = minvalppl
 xplog.epoch = 0
-xplog.cuda = 1
-
---Use CUDA
-cutorch.setDevice(1)
-lm:cuda()
-crit:cuda()
 
 ----------------------------------------------------------------------------
 --Training

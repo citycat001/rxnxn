@@ -1,5 +1,4 @@
 require 'nn'
-require 'cunn'
 
 local obj = torch.load("./torchtestsave.t7")
 local lm = obj.model
