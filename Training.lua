@@ -15,7 +15,7 @@ local inputsize = 110
 local nClass = 6
 
 --Parallel Computing setting, how many channels are used
-local batchsize = 16
+local batchsize = 32
 
 --sequence length or time-step numbers
 local rho = 30
