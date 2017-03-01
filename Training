@@ -6,7 +6,7 @@ local dl = require 'dataload'
 
 --Init parameters for RNN
 --LSTM stack, has 3 FastLSTM components, hidden node sizes for each are 300, 300, 110
-local hiddensize = {300, 300, 110}
+local hiddensize = {600, 600, 110}
 
 --Inputsize parameter for FastLSTM, which is the column number of a single time-step.
 local inputsize = 110
@@ -15,7 +15,7 @@ local inputsize = 110
 local nClass = 6
 
 --Parallel Computing setting, how many channels are used
-local batchsize = 8
+local batchsize = 16
 
 --sequence length or time-step numbers
 local rho = 30
@@ -221,3 +221,4 @@ while epoch <= repeattrain do
 	
 	collectgarbage()
 end
+
