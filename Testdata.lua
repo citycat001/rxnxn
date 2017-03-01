@@ -5,7 +5,7 @@ for i=1, 400 do
         for j = 1, 6 do
                 for k = 1, 30 do
                         str = string.format("%d,", j)
-                        str = string.rep(str, 109)
+                        str = string.rep(str, 94)
                         strcolumn = string.format("%s%d\n", str, j)
                         inputfile:write(strcolumn)
                 end
@@ -23,7 +23,7 @@ for i=1, 160 do
         for j = 1, 6 do
                 for k = 1, 30 do
                         str = string.format("%d,", j)
-                        str = string.rep(str, 109)
+                        str = string.rep(str, 94)
                         strcolumn = string.format("%s%d\n", str, j)
                         valinfile:write(strcolumn)
                 end

@@ -5,11 +5,11 @@ local csv2tensor = require 'csv2tensor'
 local dl = require 'dataload'
 
 --Init parameters for RNN
---LSTM stack, has 3 FastLSTM components, hidden node sizes for each are 300, 300, 110
-local hiddensize = {600, 600, 110}
+--LSTM stack, has 3 FastLSTM components, hidden node sizes for each are 300, 300, 95
+local hiddensize = {600, 600, 95}
 
 --Inputsize parameter for FastLSTM, which is the column number of a single time-step.
-local inputsize = 110
+local inputsize = 95
 
 --6 Catagories for the results.
 local nClass = 6
@@ -32,13 +32,13 @@ local minlr = 0.0001
 local lr = 0.05
 
 --Repeatly using the same training samples for training, change the learning rate to find out the one has the least total error. the repeat time is:
-local repeattrain = 20
+local repeattrain = 40
 
 --Total error init to a large number
 local minvalppl = 99999999
 
 --After a training with a certain learning rate, if the next 10 times re-training with other learning rates cannot have less total error, stop the training.
-local earlystop = 10
+local earlystop = 20
 
 --Object to contain the parameters and the training module and the training result, used to serialize the training, later can be used to predict.
 local xplog = {}
@@ -56,8 +56,8 @@ xplog.dataset = 'TestTrading'
 ----------------------------------------------------------------------------
 --Data processing
 ----------------------------------------------------------------------------
---single sample is a 30X110 metrix. Row 30 indicates time-steps/sequeunce, which is rho defined above, in trading scenario, it's time steps for 30 candles. 
---Column 110 is composed of 22 key data from 5 different charts(H4, H1, M30, M15, M5), based on current trading system.
+--single sample is a 30X95 metrix. Row 30 indicates time-steps/sequeunce, which is rho defined above, in trading scenario, it's time steps for 30 candles. 
+--Column 95 is composed of 22 key data from 5 different charts(H4, H1, M30, M15, M5), based on current trading system.
 --Put samples together into a single Tensor, the first dimension is the number of samples, second is time-steps/sequence which is the row number of a single sample, the third is the data size in one single time step which is the column number of a single sample.
 local input, column_input = csv2tensor.load("/home/felix/luascripts/testinput.csv")
 --local input = torch.randn(torch.LongStorage{trainsize, rho, inputsize})
@@ -103,10 +103,10 @@ for i, hz in ipairs(hiddensize) do
 	iz = hz
 end
 
---Pooling matrix size from 30X110 to 1X110, so that it can be processed by categorizing engine.
+--Pooling matrix size from 30X95 to 1X95, so that it can be processed by categorizing engine.
 stepmodule:add(nn.TemporalMaxPooling(rho))
 
---Linear mapping 110 nodes to 6 nodes, which matches 6 categories
+--Linear mapping 95 nodes to 6 nodes, which matches 6 categories
 stepmodule:add(nn.Linear(iz, nClass))
 
 --LogSoftMax for categorizing preparation.
@@ -123,7 +123,9 @@ local criterion = nn.ClassNLLCriterion()
 local crit = nn.SequencerCriterion(criterion)
 
 --Serialize the rnn module
-xplog.model = nn.Serial(lm)
+local serial = nn.Serial(lm)
+print (serial)
+xplog.model = serial
 xplog.model:mediumSerial()
 xplog.crit = crit
 xplog.trainppl = {}

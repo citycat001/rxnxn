@@ -1,12 +1,15 @@
 require 'nn'
+require 'nngraph'
+require 'dpnn'
+require 'rnn'
 
 local obj = torch.load("./torchtestsave.t7")
 local lm = obj.model
 
 print (lm)
 
-local test = torch.Tensor(1, 30, 110)
-test:fill(1)
+local test = torch.Tensor(1, 30, 95)
+test:fill(9)
 
 local output = lm:forward(test)
 
