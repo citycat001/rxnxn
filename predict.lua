@@ -9,7 +9,7 @@ local lm = obj.model
 print (lm)
 
 local test = torch.Tensor(1, 30, 95)
-test:fill(9)
+test:fill(1)
 
 local output = lm:forward(test)
 

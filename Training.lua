@@ -32,13 +32,13 @@ local minlr = 0.0001
 local lr = 0.05
 
 --Repeatly using the same training samples for training, change the learning rate to find out the one has the least total error. the repeat time is:
-local repeattrain = 40
+local repeattrain = 20
 
 --Total error init to a large number
 local minvalppl = 99999999
 
 --After a training with a certain learning rate, if the next 10 times re-training with other learning rates cannot have less total error, stop the training.
-local earlystop = 20
+local earlystop = 10
 
 --Object to contain the parameters and the training module and the training result, used to serialize the training, later can be used to predict.
 local xplog = {}
