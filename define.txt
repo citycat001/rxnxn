@@ -1,0 +1,9 @@
+1 up long start
+2 up long continue
+3 up short start
+4 up short continue
+5 down long start
+6 down long continue
+7 down short start
+8 down short continue
+9 no action
