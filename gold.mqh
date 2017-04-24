@@ -18,10 +18,13 @@
 #define GRADIENT_THRESHOLD_CHANGE_DOWN                    -0.8 
 #define GRADIENT_THRESHOLD_CHANGE_UP_CUR                  1.2   
 #define GRADIENT_THRESHOLD_CHANGE_DOWN_CUR                -1.2
-#define INDICATOR_COUNT                                   6          //including MACD_history, MACD_2color, ADX, EMA, BB Band, MACD_2color gradient
+#define INDICATOR_COUNT                                   7          //including MACD_history, MACD_2color, ADX, EMA, BB Band, MACD_2color gradient, spike reverse
 //#define EINDICATORSTATUS_COUNT                            8          //number of the enum value in EINDICATORSTATUS
 #define BBBAND_THRESHOD                                   20         //upper price minus lower price, if less than 20, means price space is not hight, better not trade.
-
+#define SPIKE_MULTIPLY_OPP                                6 
+#define SPIKE_MULTIPLY_SAME                               8
+#define SPIKE_THRESHOLD_POS                               4 
+#define SPIKE_THRESHOLD_NEG                               -4                        
 //custom error code
 #define ERROR_VALUEASSIGN                                 -1
 #define ERROR_MULTORDER                                   -2
@@ -69,6 +72,8 @@ enum EINDICATORSTATUS
    STATUS_TMP_CROSSUP = 7,
    STATUS_TMP_CROSSDOWN = 8,
    STATUS_CLOSE_DOWN = 9,
+   STATUS_REVER_UP = 10,
+   STATUS_REVER_DOWN = 11,
 };
 
 enum ECCISTATUS
@@ -126,6 +131,8 @@ enum ELINERELATION
    LINERELATION_DOWNOPEN = 6,
    LINERELATION_TMP_CROSSUP = 7,
    LINERELATION_TMP_CROSSDOWN = 8,
+   LINERELATION_REVER_UP = 9,
+   LINERELATION_REVER_DOWN = 10,
 };
 
 enum EORDERINS
@@ -135,6 +142,8 @@ enum EORDERINS
    ORDER_CLOSE = 3,
    ORDER_OPEN_SELL = 4,
    ORDER_NO = 0,
+   ORDER_CLOSE_SL = 5,
+   ORDER_CLOSE_TP = 6,
 };
 
 enum EARRAYINDEXINDICATOR
@@ -145,6 +154,7 @@ enum EARRAYINDEXINDICATOR
    ARRAYINDEX_EMA = 3,
    ARRAYINDEX_BBBAND = 4,
    ARRAYINDEX_MACD2C_G = 5,
+   ARRAYINDEX_SPIKE_REVERSE = 6,
 };
 
 enum EARRAYINDEXPERIOD
@@ -155,6 +165,12 @@ enum EARRAYINDEXPERIOD
    ARRAYINDEX_M15 = 3,
    ARRAYINDEX_M5 = 4,
    ARRAYINDEX_M3 = 5,
+};
+
+enum ESPIKEREVERSE
+{
+   STATUS_SPIKE_NO = 0,
+   STATUS_SPIKE_REVERSE = 1,
 };
 
 class CStatus
@@ -176,6 +192,7 @@ public:
    virtual int CheckMACD2C(int& smatrix[][]);
    virtual int GetLineRelation(double c1, double c2, double l1, double l2, double ll1, double ll2, int time_frame);
    virtual int CalculateGradient(double gradient_old, double gradient_cur);
+   virtual int CheckSpike(int& smatrix[][]);
 };
 
 class CStatusH4 : public CStatus
