@@ -28,6 +28,8 @@
 //custom error code
 #define ERROR_VALUEASSIGN                                 -1
 #define ERROR_MULTORDER                                   -2
+#define CLOSEGAP_POS                                      0.2
+#define CLOSEGAP_NEG                                      -0.2
 
 //+------------------------------------------------------------------+
 //| DLL imports                                                      |
