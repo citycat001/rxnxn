@@ -59,11 +59,13 @@ xplog.dataset = 'TestTrading'
 --single sample is a 30X95 metrix. Row 30 indicates time-steps/sequeunce, which is rho defined above, in trading scenario, it's time steps for 30 candles. 
 --Column 95 is composed of 22 key data from 5 different charts(H4, H1, M30, M15, M5), based on current trading system.
 --Put samples together into a single Tensor, the first dimension is the number of samples, second is time-steps/sequence which is the row number of a single sample, the third is the data size in one single time step which is the column number of a single sample.
-local input, column_input = csv2tensor.load("/home/felix/luascripts/testinput.csv")
+--local input, column_input = csv2tensor.load("/home/felix/luascripts/testinput.csv")	--office
+local input, column_input = csv2tensor.load("./testinput.csv")		--home
 --local input = torch.randn(torch.LongStorage{trainsize, rho, inputsize})
 
 --single sample in the end comes to a single catagory, so only has one number for target as class.
-local target, column_target = csv2tensor.load("/home/felix/luascripts/testtargetfile.csv")
+--local target, column_target = csv2tensor.load("/home/felix/luascripts/testtargetfile.csv")	--office
+local target, column_target = csv2tensor.load("./testtargetfile.csv")		--home
 --local target = torch.LongTensor(trainsize):random(nClass)
 
 --Prepare training data structure
@@ -72,8 +74,10 @@ dataloader = dl.TensorLoader(input:resize(trainsize, rho, inputsize), target)
 --Validation sample loading, have the same dimensions as the training data
 --local vinput = torch.randn(torch.LongStorage{validsize, rho, inputsize})
 --local vtarget = torch.LongTensor(validsize):random(nClass)
-local vinput, column_vinput = csv2tensor.load("/home/felix/luascripts/validinput.csv")
-local vtarget, column_vtarget = csv2tensor.load("/home/felix/luascripts/validargetfile.csv")
+--local vinput, column_vinput = csv2tensor.load("/home/felix/luascripts/validinput.csv")	--office
+local vinput, column_vinput = csv2tensor.load("./validinput.csv")	--home
+--local vtarget, column_vtarget = csv2tensor.load("/home/felix/luascripts/validargetfile.csv")	--office
+local vtarget, column_vtarget = csv2tensor.load("./validargetfile.csv")		--home
 validloader = dl.TensorLoader(vinput:resize(validsize, rho, inputsize), vtarget)
 
 ----------------------------------------------------------------------------
