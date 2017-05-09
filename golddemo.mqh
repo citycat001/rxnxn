@@ -30,6 +30,7 @@
 #define ERROR_MULTORDER                                   -2
 #define CLOSEGAP_POS                                      0.2
 #define CLOSEGAP_NEG                                      -0.2
+#define M30EMA50GAP                                       2
 
 //+------------------------------------------------------------------+
 //| DLL imports                                                      |
@@ -96,6 +97,14 @@ enum EMACD2CSTATUS
    STATUS_MACD2C_BELOW_YL = 4,
    STATUS_MACD2C_ABOVE_YL_CLOSE = 5,
    STATUS_MACD2C_BELOW_YL_CLOSE = 6,   
+};
+
+enum EM30EMA50STATUS
+{
+   STATUS_SUPPRESS_NO = 0,
+   STATUS_M30EMA50_SUPPRESS_SELL = 1,
+   STATUS_M30EMA50_SUPPRESS_BUY = 2,
+   STATUS_M30EMA50_SUPPRESS_BOTH = 3,
 };
 
 enum EMACD2CMODE
