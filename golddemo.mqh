@@ -31,6 +31,7 @@
 #define CLOSEGAP_POS                                      0.2
 #define CLOSEGAP_NEG                                      -0.2
 #define M30EMA50GAP                                       2
+#define H1EMA50GAP                                        2
 
 //+------------------------------------------------------------------+
 //| DLL imports                                                      |
@@ -101,10 +102,18 @@ enum EMACD2CSTATUS
 
 enum EM30EMA50STATUS
 {
-   STATUS_SUPPRESS_NO = 0,
+   STATUS_SUPPRESS_M30_NO = 0,
    STATUS_M30EMA50_SUPPRESS_SELL = 1,
    STATUS_M30EMA50_SUPPRESS_BUY = 2,
    STATUS_M30EMA50_SUPPRESS_BOTH = 3,
+};
+
+enum EH1EMA50STATUS
+{
+   STATUS_SUPPRESS_H1_NO = 0,
+   STATUS_H1EMA50_SUPPRESS_SELL = 1,
+   STATUS_H1EMA50_SUPPRESS_BUY = 2,
+   STATUS_H1EMA50_SUPPRESS_BOTH = 3,
 };
 
 enum EMACD2CMODE
