@@ -18,7 +18,7 @@
 #define GRADIENT_THRESHOLD_CHANGE_DOWN                    -0.8 
 #define GRADIENT_THRESHOLD_CHANGE_UP_CUR                  1.2   
 #define GRADIENT_THRESHOLD_CHANGE_DOWN_CUR                -1.2
-#define INDICATOR_COUNT                                   7          //including MACD_history, MACD_2color, ADX, EMA, BB Band, MACD_2color gradient, spike reverse
+#define INDICATOR_COUNT                                   9          //including MACD_history, MACD_2color, ADX, EMA, BB Band, MACD_2color gradient, spike reverse, EMA50, ASRC
 //#define EINDICATORSTATUS_COUNT                            8          //number of the enum value in EINDICATORSTATUS
 #define BBBAND_THRESHOD                                   20         //upper price minus lower price, if less than 20, means price space is not hight, better not trade.
 #define SPIKE_MULTIPLY_OPP                                6 
@@ -28,8 +28,17 @@
 //custom error code
 #define ERROR_VALUEASSIGN                                 -1
 #define ERROR_MULTORDER                                   -2
+//constant definition
 #define CLOSEGAP_POS                                      0.02
 #define CLOSEGAP_NEG                                      -0.02
+#define M5EMA50GAP                                        0.05
+#define M15EMA50GAP                                       0.1
+#define M30EMA50GAP                                       0.2
+#define H1EMA50GAP                                        0.3
+#define H4EMA50GAP                                        0.3
+#define D1EMA50GAP                                        0.3
+#define ASRCD1GAP                                         2
+#define H1EMA50H4ADX_THRESHOD                             35
 
 //+------------------------------------------------------------------+
 //| DLL imports                                                      |
@@ -60,6 +69,7 @@ enum ETIMERANGE
    TIMERANGE_NO = 0,
    TIMERANGE_EU = 1,
    TIMERANGE_US = 2,
+   TIMERANGE_TRADE = 3,
 };
 
 enum EINDICATORSTATUS
@@ -76,6 +86,13 @@ enum EINDICATORSTATUS
    STATUS_CLOSE_DOWN = 9,
    STATUS_REVER_UP = 10,
    STATUS_REVER_DOWN = 11,
+};
+
+enum EASRCSTATUS
+{
+   STATUS_ASRC_NONE = 0,
+   STATUS_ASRC_TOP = 1,
+   STATUS_ASRC_BOTTOM = 2,
 };
 
 enum ECCISTATUS
@@ -96,6 +113,14 @@ enum EMACD2CSTATUS
    STATUS_MACD2C_BELOW_YL = 4,
    STATUS_MACD2C_ABOVE_YL_CLOSE = 5,
    STATUS_MACD2C_BELOW_YL_CLOSE = 6,   
+};
+
+enum EEMA50STATUS
+{
+   STATUS_SUPPRESS_NO = 0,
+   STATUS_EMA50_SUPPRESS_SELL = 1,
+   STATUS_EMA50_SUPPRESS_BUY = 2,
+   STATUS_EMA50_SUPPRESS_BOTH = 3,
 };
 
 enum EMACD2CMODE
@@ -158,6 +183,8 @@ enum EARRAYINDEXINDICATOR
    ARRAYINDEX_BBBAND = 4,
    ARRAYINDEX_MACD2C_G = 5,
    ARRAYINDEX_SPIKE_REVERSE = 6,
+   ARRAYINDEX_EMA50 = 7,
+   ARRAYINDEX_ASRC = 8,
 };
 
 enum EARRAYINDEXPERIOD
@@ -196,6 +223,8 @@ public:
    virtual int GetLineRelation(double c1, double c2, double l1, double l2, double ll1, double ll2, int time_frame);
    virtual int CalculateGradient(double gradient_old, double gradient_cur);
    virtual int CheckSpike(int& smatrix[][]);
+   virtual int CheckEMA50(int& smatrix[][]);
+   virtual int CheckASRC(int& smatrix[][]);
 };
 
 class CStatusH4 : public CStatus
