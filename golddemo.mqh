@@ -18,7 +18,7 @@
 #define GRADIENT_THRESHOLD_CHANGE_DOWN                    -0.8 
 #define GRADIENT_THRESHOLD_CHANGE_UP_CUR                  1.2   
 #define GRADIENT_THRESHOLD_CHANGE_DOWN_CUR                -1.2
-#define INDICATOR_COUNT                                   9          //including MACD_history, MACD_2color, ADX, EMA, BB Band, MACD_2color gradient, spike reverse, EMA50, ASRC
+#define INDICATOR_COUNT                                   10          //including MACD_history, MACD_2color, ADX, EMA, BB Band, MACD_2color gradient, spike reverse, EMA50, ASRC, PFE
 //#define EINDICATORSTATUS_COUNT                            8          //number of the enum value in EINDICATORSTATUS
 #define BBBAND_THRESHOD                                   20         //upper price minus lower price, if less than 20, means price space is not hight, better not trade.
 #define SPIKE_MULTIPLY_OPP                                6 
@@ -105,6 +105,12 @@ enum ECCISTATUS
    STATUS_CCI_DOWN_STRONG = 5,
 };
 
+enum EPFESTATUS
+{
+   STATUS_PFE_POS_NOTRADEZONE = 1,
+   STATUS_PFE_NEG_NOTRADEZONE = 2,
+};
+
 enum EMACD2CSTATUS
 {
    STATUS_MACD2C_V1_UP = 1,
@@ -185,6 +191,7 @@ enum EARRAYINDEXINDICATOR
    ARRAYINDEX_SPIKE_REVERSE = 6,
    ARRAYINDEX_EMA50 = 7,
    ARRAYINDEX_ASRC = 8,
+   ARRAYINDEX_PFE = 9,
 };
 
 enum EARRAYINDEXPERIOD
@@ -225,6 +232,7 @@ public:
    virtual int CheckSpike(int& smatrix[][]);
    virtual int CheckEMA50(int& smatrix[][]);
    virtual int CheckASRC(int& smatrix[][]);
+   virtual int CheckPFE(int& smatrix[][]);
 };
 
 class CStatusH4 : public CStatus
