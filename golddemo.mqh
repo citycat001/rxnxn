@@ -9,7 +9,7 @@
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
-#define STATUS_OBJARR_SIZE                                6
+#define STATUS_OBJARR_SIZE                                8
 #define GRADIENT_THRESHOLD_UP                             0.0
 #define GRADIENT_THRESHOLD_DOWN                           -0.0
 #define GRADIENT_THRESHOLD_UP_INFINIT                     90.0
@@ -39,6 +39,7 @@
 #define D1EMA50GAP                                        3
 #define ASRCD1GAP                                         20
 #define H1EMA50H4ADX_THRESHOD                             35
+#define M30CHARGE_LENGTH                                  3
 
 //+------------------------------------------------------------------+
 //| DLL imports                                                      |
@@ -109,6 +110,8 @@ enum EPFESTATUS
 {
    STATUS_PFE_POS_NOTRADEZONE = 1,
    STATUS_PFE_NEG_NOTRADEZONE = 2,
+   STATUS_PFE_SUPPRESS_BUY = 3,
+   STATUS_PFE_SUPPRESS_SELL = 4,
 };
 
 enum EMACD2CSTATUS
@@ -202,6 +205,8 @@ enum EARRAYINDEXPERIOD
    ARRAYINDEX_M15 = 3,
    ARRAYINDEX_M5 = 4,
    ARRAYINDEX_D1 = 5,
+   ARRAYINDEX_W1 = 6,
+   ARRAYINDEX_Mth = 7,
 };
 
 enum ESPIKEREVERSE
@@ -293,4 +298,38 @@ private:
    double m_adx_sth;
 public:
    CStatusD1(string s);
+};
+
+class CStatusW1 : public CStatus
+{
+private:
+   double m_adx_pdi;
+   double m_adx_ndi;
+   double m_adx_sth;
+public:
+   CStatusW1(string s);
+   virtual int CheckMACDH(int& smatrix[][], double& gradient_sec, double& gradient_old, double& gradient_cur){return 0;}; 
+   virtual int CheckEMA(int& smatrix[][]){return 0;};
+   virtual int CheckMACD2C(int& smatrix[][]){return 0;};
+   virtual int CheckSpike(int& smatrix[][]){return 0;};
+   virtual int CheckEMA50(int& smatrix[][]){return 0;};
+   virtual int CheckASRC(int& smatrix[][]){return 0;};
+   virtual int CheckPFE(int& smatrix[][]){return 0;}; 
+};
+
+class CStatusMth : public CStatus
+{
+private:
+   double m_adx_pdi;
+   double m_adx_ndi;
+   double m_adx_sth;
+public:
+   CStatusMth(string s);
+   virtual int CheckMACDH(int& smatrix[][], double& gradient_sec, double& gradient_old, double& gradient_cur){return 0;}; 
+   virtual int CheckEMA(int& smatrix[][]){return 0;};
+   virtual int CheckMACD2C(int& smatrix[][]){return 0;};
+   virtual int CheckSpike(int& smatrix[][]){return 0;};
+   virtual int CheckEMA50(int& smatrix[][]){return 0;};
+   virtual int CheckASRC(int& smatrix[][]){return 0;};
+   virtual int CheckPFE(int& smatrix[][]){return 0;};    
 };
