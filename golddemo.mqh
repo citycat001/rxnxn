@@ -9,7 +9,7 @@
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
-#define STATUS_OBJARR_SIZE                                8
+#define STATUS_OBJARR_SIZE                                6
 #define GRADIENT_THRESHOLD_UP                             0.0
 #define GRADIENT_THRESHOLD_DOWN                           -0.0
 #define GRADIENT_THRESHOLD_UP_INFINIT                     90.0
@@ -20,7 +20,8 @@
 #define GRADIENT_THRESHOLD_CHANGE_DOWN_CUR                -1.2
 #define INDICATOR_COUNT                                   10          //including MACD_history, MACD_2color, ADX, EMA, BB Band, MACD_2color gradient, spike reverse, EMA50, ASRC, PFE
 //#define EINDICATORSTATUS_COUNT                            8          //number of the enum value in EINDICATORSTATUS
-#define BBBAND_THRESHOD                                   20         //upper price minus lower price, if less than 20, means price space is not hight, better not trade.
+#define BBBAND_THRESHOD_M30                               3.5         //upper price minus lower price, if less than 2.5, means price space is not hight, better not trade.
+#define BBBAND_THRESHOD_H1                                4
 #define SPIKE_MULTIPLY_OPP                                6 
 #define SPIKE_MULTIPLY_SAME                               8
 #define SPIKE_THRESHOLD_POS                               4 
